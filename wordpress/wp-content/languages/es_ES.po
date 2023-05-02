@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.2.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-04-06 09:27:58+0000\n"
+"PO-Revision-Date: 2023-04-25 15:10:18+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -464,19 +464,19 @@ msgstr "Por favor, comprueba que la extensión de PHP %s está instalada y activ
 msgid "When using the %1$s constant, make sure to set these globals to an array: %2$s."
 msgstr "Cuando utilices la constante %1$s, asegúrate de establecer estas globales en un array: %2$s."
 
-#: wp-includes/html-api/class-wp-html-tag-processor.php:2136
+#: wp-includes/html-api/class-wp-html-tag-processor.php:2193
 msgid "The query argument must be an array or a tag name."
 msgstr "El argumento de la consulta debe ser un array o el nombre de una etiqueta."
 
-#: wp-includes/html-api/class-wp-html-tag-processor.php:1825
+#: wp-includes/html-api/class-wp-html-tag-processor.php:1882
 msgid "Invalid attribute name."
 msgstr "Nombre de atributo no válido."
 
-#: wp-includes/html-api/class-wp-html-tag-processor.php:1497
+#: wp-includes/html-api/class-wp-html-tag-processor.php:1553
 msgid "Too many calls to seek() - this can lead to performance issues."
 msgstr "Demasiadas llamadas a seek() - esto puede llevar a problemas de rendimiento."
 
-#: wp-includes/html-api/class-wp-html-tag-processor.php:1488
+#: wp-includes/html-api/class-wp-html-tag-processor.php:1544
 msgid "Unknown bookmark name."
 msgstr "Nombre de marcador desconocido."
 
@@ -3842,7 +3842,7 @@ msgstr "(enlace a «Inicio», se abre en una nueva pestaña)"
 
 #. translators: 1: Block type, 2: Typography supports key, e.g: fontSize,
 #. lineHeight, etc. 3: block.json, 4: Old metadata key, 5: New metadata key.
-#: wp-includes/blocks.php:1218
+#: wp-includes/blocks.php:1222
 msgid "Block \"%1$s\" is declaring %2$s support in %3$s file under %4$s. %2$s support is now declared under %5$s."
 msgstr "El bloque «%1$s» está declarando compatibilidad con %2$s en el archivo %3$s en %4$s. La compatibilidad con %2$s ahora está declarada en %5$s."
 
@@ -11082,7 +11082,7 @@ msgstr "Hola, %s"
 
 #. translators: Hidden accessibility text.
 #: wp-includes/customize/class-wp-customize-nav-menu-location-control.php:86
-#: wp-admin/nav-menus.php:811
+#: wp-admin/nav-menus.php:814
 msgid "Edit selected menu"
 msgstr "Editar el menú seleccionado"
 
@@ -12238,7 +12238,7 @@ msgstr "Ocultar la contraseña"
 msgid "Show password"
 msgstr "Mostrar la contraseña"
 
-#: wp-includes/class-wp-customize-nav-menus.php:513 wp-admin/nav-menus.php:1011
+#: wp-includes/class-wp-customize-nav-menus.php:513 wp-admin/nav-menus.php:1014
 msgid "Menu Name"
 msgstr "Nombre del menú"
 
@@ -12663,44 +12663,44 @@ msgid "This panel is used for managing navigation menus for content you have alr
 msgstr "Este panel se usa para gestionar los menús de navegación de los contenidos que ya has publicado en tu sitio. Puedes crear menús y añadir elementos del contenido existente, como páginas, entradas, categorías, etiquetas, formatos o enlaces personalizados. "
 
 #. translators: 1: Item name, 2: Item position, 3: Parent item name.
-#: wp-includes/class-wp-customize-nav-menus.php:568 wp-admin/nav-menus.php:513
+#: wp-includes/class-wp-customize-nav-menus.php:568 wp-admin/nav-menus.php:516
 msgid "%1$s. Sub item number %2$d under %3$s."
 msgstr "%1$s. Número de subelemento %2$d de %3$s."
 
 #. translators: 1: Item name, 2: Item position, 3: Total number of items.
-#: wp-includes/class-wp-customize-nav-menus.php:566 wp-admin/nav-menus.php:511
+#: wp-includes/class-wp-customize-nav-menus.php:566 wp-admin/nav-menus.php:514
 msgid "%1$s. Menu item %2$d of %3$d."
 msgstr "%1$s. Elemento de menú %2$d de %3$d."
 
 #. translators: %s: Previous item name.
-#: wp-includes/class-wp-customize-nav-menus.php:564 wp-admin/nav-menus.php:509
+#: wp-includes/class-wp-customize-nav-menus.php:564 wp-admin/nav-menus.php:512
 msgid "Out from under %s"
 msgstr "Sacar de debajo de %s"
 
 #. translators: %s: Previous item name.
-#: wp-includes/class-wp-customize-nav-menus.php:562 wp-admin/nav-menus.php:507
+#: wp-includes/class-wp-customize-nav-menus.php:562 wp-admin/nav-menus.php:510
 msgid "Under %s"
 msgstr "Detrás de %s"
 
 #. translators: %s: Previous item name.
-#: wp-includes/class-wp-customize-nav-menus.php:560 wp-admin/nav-menus.php:505
+#: wp-includes/class-wp-customize-nav-menus.php:560 wp-admin/nav-menus.php:508
 msgid "Move out from under %s"
 msgstr "Sacarlo de debajo de %s"
 
 #. translators: %s: Previous item name.
-#: wp-includes/class-wp-customize-nav-menus.php:558 wp-admin/nav-menus.php:503
+#: wp-includes/class-wp-customize-nav-menus.php:558 wp-admin/nav-menus.php:506
 msgid "Move under %s"
 msgstr "Mover detrás de %s"
 
-#: wp-includes/class-wp-customize-nav-menus.php:556 wp-admin/nav-menus.php:501
+#: wp-includes/class-wp-customize-nav-menus.php:556 wp-admin/nav-menus.php:504
 msgid "Move to the top"
 msgstr "Mover a la primera posición"
 
-#: wp-includes/class-wp-customize-nav-menus.php:555 wp-admin/nav-menus.php:500
+#: wp-includes/class-wp-customize-nav-menus.php:555 wp-admin/nav-menus.php:503
 msgid "Move down one"
 msgstr "Mover uno abajo"
 
-#: wp-includes/class-wp-customize-nav-menus.php:554 wp-admin/nav-menus.php:499
+#: wp-includes/class-wp-customize-nav-menus.php:554 wp-admin/nav-menus.php:502
 msgid "Move up one"
 msgstr "Mover uno arriba"
 
@@ -12730,19 +12730,19 @@ msgstr "%s (Pendiente)"
 msgid "%s (Invalid)"
 msgstr "%s (no válido)"
 
-#: wp-includes/class-wp-customize-nav-menus.php:522 wp-admin/nav-menus.php:524
+#: wp-includes/class-wp-customize-nav-menus.php:522 wp-admin/nav-menus.php:527
 msgid "Menu item is now a sub-item"
 msgstr "El elemento de menú es ahora un subelemento"
 
-#: wp-includes/class-wp-customize-nav-menus.php:521 wp-admin/nav-menus.php:523
+#: wp-includes/class-wp-customize-nav-menus.php:521 wp-admin/nav-menus.php:526
 msgid "Menu item moved out of submenu"
 msgstr "Elemento de menú sacado fuera del submenú"
 
-#: wp-includes/class-wp-customize-nav-menus.php:520 wp-admin/nav-menus.php:521
+#: wp-includes/class-wp-customize-nav-menus.php:520 wp-admin/nav-menus.php:524
 msgid "Menu item moved down"
 msgstr "Elemento de menú bajado"
 
-#: wp-includes/class-wp-customize-nav-menus.php:519 wp-admin/nav-menus.php:520
+#: wp-includes/class-wp-customize-nav-menus.php:519 wp-admin/nav-menus.php:523
 msgid "Menu item moved up"
 msgstr "Elemento de menú subido"
 
@@ -12758,7 +12758,7 @@ msgstr "Menú creado"
 msgid "Menu item deleted"
 msgstr "Elemento de menú borrado"
 
-#: wp-includes/class-wp-customize-nav-menus.php:515 wp-admin/nav-menus.php:518
+#: wp-includes/class-wp-customize-nav-menus.php:515 wp-admin/nav-menus.php:521
 msgid "Menu item added"
 msgstr "Elemento de menú añadido"
 
@@ -12770,7 +12770,7 @@ msgid "Home"
 msgstr "Inicio"
 
 #: wp-includes/customize/class-wp-customize-new-menu-control.php:59
-#: wp-admin/nav-menus.php:1014 wp-admin/nav-menus.php:1179
+#: wp-admin/nav-menus.php:1017 wp-admin/nav-menus.php:1182
 msgid "Create Menu"
 msgstr "Crear menú"
 
@@ -12813,7 +12813,7 @@ msgid "Navigation Label"
 msgstr "Etiqueta de navegación"
 
 #: wp-includes/customize/class-wp-customize-nav-menu-auto-add-control.php:46
-#: wp-admin/nav-menus.php:1106
+#: wp-admin/nav-menus.php:1109
 msgid "Automatically add new top-level pages to this menu"
 msgstr "Añadir automáticamente nuevas páginas de nivel superior a este menú"
 
@@ -12823,7 +12823,7 @@ msgid "Menu Location"
 msgstr "Ubicación de menú"
 
 #: wp-includes/class-wp-customize-nav-menus.php:1106
-#: wp-admin/nav-menus.php:1173
+#: wp-admin/nav-menus.php:1176
 msgid "Delete Menu"
 msgstr "Borrar menú"
 
@@ -15498,7 +15498,7 @@ msgstr "Personalizar: %s"
 #: wp-includes/widgets/class-wp-nav-menu-widget.php:190 wp-admin/export.php:223
 #: wp-admin/export.php:228 wp-admin/export.php:275 wp-admin/export.php:280
 #: wp-admin/export.php:320 wp-admin/export.php:325
-#: wp-admin/includes/template.php:746 wp-admin/nav-menus.php:896
+#: wp-admin/includes/template.php:746 wp-admin/nav-menus.php:899
 #: wp-admin/options-privacy.php:296 wp-admin/options-reading.php:121
 #: wp-admin/options-reading.php:138 wp-admin/widgets-form.php:317
 msgid "&mdash; Select &mdash;"
@@ -16757,7 +16757,7 @@ msgstr "Una respuesta a %s"
 #: wp-includes/class-wp-customize-nav-menus.php:673
 #: wp-includes/customize/class-wp-customize-nav-menus-panel.php:113
 #: wp-includes/js/dist/block-library.js:30361 wp-admin/menu.php:228
-#: wp-admin/nav-menus.php:694
+#: wp-admin/nav-menus.php:32 wp-admin/nav-menus.php:697
 msgid "Menus"
 msgstr "Menús"
 
@@ -18886,7 +18886,7 @@ msgstr "Nueva página"
 #: wp-includes/media.php:4585 wp-includes/js/dist/block-editor.js:50925
 #: wp-includes/js/dist/block-library.js:56830
 #: wp-includes/js/dist/editor.js:5967 wp-admin/includes/template.php:2052
-#: wp-admin/nav-menus.php:936 wp-admin/plugin-editor.php:238
+#: wp-admin/nav-menus.php:939 wp-admin/plugin-editor.php:238
 #: wp-admin/theme-editor.php:244
 msgid "Select"
 msgstr "Seleccionar"
@@ -19315,7 +19315,7 @@ msgstr "Contenido"
 #: wp-admin/includes/media.php:1733 wp-admin/includes/media.php:2272
 #: wp-admin/includes/meta-boxes.php:166 wp-admin/includes/meta-boxes.php:224
 #: wp-admin/includes/template.php:510 wp-admin/includes/template.php:759
-#: wp-admin/includes/template.php:895 wp-admin/nav-menus.php:1154
+#: wp-admin/includes/template.php:895 wp-admin/nav-menus.php:1157
 #: wp-admin/options-general.php:149 wp-admin/user-edit.php:540
 #: wp-admin/user-edit.php:655 wp-admin/widgets-form.php:337
 #: wp-admin/widgets-form.php:340 wp-admin/widgets-form.php:558
