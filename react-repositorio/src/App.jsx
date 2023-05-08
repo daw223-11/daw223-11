@@ -1,33 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from 'react';
 import './App.css'
+import { Login } from './pages/Login.jsx'
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
+import { Inicio } from './pages/Inicio'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { TablonAnuncios } from './pages/TablonAnuncios';
+import { Csv } from './pages/Csv';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState();
+  // TODO: Comprobar que existe un usuario en el sessionStorage
+  // TODO: Si existe redirigir a inicio
+  // TODO: Sino existe redirigir al login
+
+  const changeUser = (newUser) => {
+    setUser(newUser);
+    /* sessionStorage.setItem("key", "value"); */
+    console.log(newUser)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Inicio />} />
+          <Route path="/login" element={<Login user={user} changeUser={changeUser} />} />
+          <Route element={<ProtectedRoute isAllowed={!!user} />} />
+          <Route path="/inicio" element={<Inicio user={user} />} />
+          <Route path="/csv" element={<Csv />} />
+          <Route path="/tablon-anuncios" element={<TablonAnuncios />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

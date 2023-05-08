@@ -1,42 +1,44 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* .login-body {
+    display: flex;
+    flex-direction: column;
+
+} */
+/* .login-container {
+    border-radius: 8px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+} */
+
+/* .login-form {
+    width: 100%;
+} */
+
+.inicio {
+    display: grid;
+    grid-template-areas: 
+        "header header"
+        "nav main";
+    grid-template-columns: 0.2fr 0.8fr;
+    grid-template-rows: 0.1fr 0.8fr;
+    height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header {
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 30px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav {
+    grid-area: nav;
+    width: 80%;
+    margin: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.nav li{
+    width: 100%;
+    list-style: none;
+    border: 1px solid black;
 }
