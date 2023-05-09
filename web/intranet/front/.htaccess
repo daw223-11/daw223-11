@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /intranet/front/
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /intranet/front/index.html [L]

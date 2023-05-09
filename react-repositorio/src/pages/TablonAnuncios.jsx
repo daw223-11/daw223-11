@@ -1,5 +1,19 @@
+import { Center } from '@chakra-ui/react'
+import { NavBar } from '../components/NavBar'
+import { Header } from '../components/Header'
+import { MainTablonAnuncios } from '../components/MainTablonAnuncios'
 
 export function TablonAnuncios() {
 
-    return <h1>Tablón Anuncios</h1>
+    return (
+        <div className="page">
+            <Header />
+            <Center>
+                <NavBar />
+            </Center>
+            <Center>
+                <MainTablonAnuncios />
+            </Center>
+        </div>
+    )
 }

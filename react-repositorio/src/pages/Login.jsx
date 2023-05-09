@@ -23,7 +23,7 @@ export function Login(props) {
         /* setUser({ username: 'user' }) */
         // TODO: HACER POST A LA API
         // SI LA PETICIÓN DEVUELVE UN USER (INFO USUARIO) ENTONCES REDIRIGE A INICIO
-        const options = {
+        /* const options = {
             method: 'POST',
             body: JSON.stringify({
                 username: username,
@@ -46,11 +46,10 @@ export function Login(props) {
         fetch("http://129.151.235.234/intranet/api/index.php/login", requestOptions)
             .then(response => response.json())
             .then(result => {
-                /* if (!result) */
                 useNavigate('/inicio')
                 localStorage.setItem('userToken', result.token);
             })
-            .catch(error => console.log('error', error));
+            .catch(error => console.log('error', error)); */
 
     }
     // TODO: Recuerda cambiar la lógica de esto

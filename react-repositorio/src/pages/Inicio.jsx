@@ -10,11 +10,11 @@ export function Inicio(props) {
 
 
 
-    if (!props.user){
+    /* if (!props.user) {
         return <Navigate to='/login' replace />
-    }
+    } */
     return (
-        <div className='inicio'>
+        <div className='page inicio'>
             <Header />
             <Center>
                 <NavBar />

@@ -1,9 +1,9 @@
 import { Header } from "../components/Header"
 import { NavBar } from "../components/NavBar"
-import { MainCsv } from "../components/MainCsv"
 import { Center } from "@chakra-ui/react"
+import { MainEmails } from "../components/MainEmails"
 
-export function Csv() {
+export function Emails() {
 
     return (
         <div className="page">
@@ -12,7 +12,7 @@ export function Csv() {
                 <NavBar />
             </Center>
             <Center>
-                <MainCsv />
+                <MainEmails />
             </Center>
         </div>
     )
