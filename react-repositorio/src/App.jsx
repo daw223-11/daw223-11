@@ -3,7 +3,8 @@ import './App.css';
 import { Login } from './pages/Login.jsx';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { Inicio } from './pages/Inicio';
-import { ProtectedRoute } from './components/ProtectedRoute';
+import { PublicRoute } from './components/PublicRoute'
+import { PrivateRoute } from './components/PrivateRoute';
 import { TablonAnuncios } from './pages/TablonAnuncios';
 import { Csv } from './pages/Csv';
 import { Matriculaciones } from './pages/Matriculaciones';
@@ -26,14 +27,17 @@ function App() {
 
       <BrowserRouter basename='/intranet'>
         <Routes>
-          <Route index element={<Inicio />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<PublicRoute />}>
+            <Route index element={<Login />} />
+          </Route>
+          <Route path='/private' element={<PrivateRoute isAuthenticated={false} />}>
+            <Route index path='/private/inicio' element={<Inicio />} />
+            <Route path="/private/csv" element={<Csv />} />
+            <Route path="/private/tablon-anuncios" element={<TablonAnuncios />} />
+            <Route path="/private/matriculaciones" element={<Matriculaciones />} />
+            <Route path='/private/emails' element={<Emails />} />
+          </Route>
           {/* <Route element={<ProtectedRoute isAllowed={!!user} />} /> */}
-          <Route path="/inicio" element={<Inicio />} />
-          <Route path="/csv" element={<Csv />} />
-          <Route path="/tablon-anuncios" element={<TablonAnuncios />} />
-          <Route path="/matriculaciones" element={<Matriculaciones />} />
-          <Route path='/emails' element={<Emails />} />
         </Routes>
       </BrowserRouter>
     </>
