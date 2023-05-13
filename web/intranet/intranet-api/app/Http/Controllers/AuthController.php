@@ -45,16 +45,24 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * Función que realiza el logout. Busca el usuario según su token y elimina dicho token.
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function logout(Request $request){
 
-        if ($request->user()) {
-            $request->user()->tokens()->delete();
+        if (!$request->user()) {
+            $data['success'] = 0;
+            $data['message'] = "Logged out failed.";
+            return response()->json($data, '500');
         }
-    
+        
+        $request->user()->tokens()->delete();
         $data['success'] = 1;
         $data['message'] = "Logged out successfully.";
         return response()->json($data, '200');
-
     }
 
 }

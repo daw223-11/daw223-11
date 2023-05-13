@@ -2,12 +2,11 @@ import { PasswordInput } from "../components/PasswordInput"
 import { Center, Container, Stack, Input, Button, FormControl, FormLabel } from '@chakra-ui/react'
 import { useState } from "react"
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { useAuthContext } from "../context/AuthContext.jsx";
 export function Login(props) {
+    const { login, user } = useAuthContext();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    /* const [user, setUser] = useState(null); */
-    console.log(props)
     const handlePasswordChange = (e) => {
         console.log('password: ', e.target.value)
         setPassword(e.target.value);
@@ -20,41 +19,17 @@ export function Login(props) {
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        /* setUser({ username: 'user' }) */
-        // TODO: HACER POST A LA API
-        // SI LA PETICIÓN DEVUELVE UN USER (INFO USUARIO) ENTONCES REDIRIGE A INICIO
-        /* const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        }
+        // Se realiza el login
+        login({
+            username: username,
+            password: password
+        })
 
-        var raw = JSON.stringify({
-            "username": username,
-            "password": password
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("http://129.151.235.234/intranet/api/index.php/login", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                useNavigate('/inicio')
-                localStorage.setItem('userToken', result.token);
-            })
-            .catch(error => console.log('error', error)); */
 
     }
-    // TODO: Recuerda cambiar la lógica de esto
-    if (props.user) {
-        return <Navigate to='/inicio' replace />
+
+    if (user) {
+        return <Navigate to='/private/inicio' replace />
     }
 
     return (

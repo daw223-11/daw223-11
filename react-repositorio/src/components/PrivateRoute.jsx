@@ -1,11 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { Login } from '../pages/Login';
+import { useAuthContext } from '../context/AuthContext';
 
-//TODO: Está hardcodeado con las props
 export function PrivateRoute(props) {
-    /* const { isAuthenticated } = useAuthContext(); */
+    const { user } = useAuthContext();
 
-    if (!props.isAuthenticated) {
+    if (!user) {
         return <Navigate to='/' replace />;
     }
 
