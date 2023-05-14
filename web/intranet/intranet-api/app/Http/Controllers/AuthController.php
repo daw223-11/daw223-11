@@ -55,8 +55,8 @@ class AuthController extends Controller
 
         if (!$request->user()) {
             $data['success'] = 0;
-            $data['message'] = "Logged out failed.";
-            return response()->json($data, '500');
+            $data['message'] = "Log out failed.";
+            return response()->json($data, '400');
         }
         
         $request->user()->tokens()->delete();

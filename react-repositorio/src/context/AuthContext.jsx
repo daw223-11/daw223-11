@@ -33,7 +33,6 @@ export default function AuthContextProvider({ children }) {
         fetch("http://iesjulianmarias.ddnsking.com/intranet/api/index.php/login", requestOptions)
             .then(response => response.json())
             .then(userData => {
-                //TODO: COMPROBACIÓN DE USUARIO VUELTA
                 if (userData.token) {
                     // Guarda sessión del usuario en el localStorage
                     window.localStorage.setItem(INTRANET_USER, JSON.stringify(userData));
