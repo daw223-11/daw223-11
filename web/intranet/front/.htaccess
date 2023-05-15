@@ -8,11 +8,28 @@
 <IfModule mod_rewrite.c>
 
   RewriteEngine On
-  RewriteBase /intranet
+  RewriteBase /intranet/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /intranet/index.html [L]
+
+
+
+  #RewriteEngine On
+  #RewriteBase /
+
+  # Rutas públicas
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{REQUEST_URI} !^/intranet/private/ [NC]
+  #RewriteRule ^(.*)$ index.html [L]
+
+  # Rutas privadas
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{REQUEST_URI} ^/intranet/private/ [NC]
+  #RewriteRule ^(.*)$ /intranet/index.html [L]
 
 </IfModule>

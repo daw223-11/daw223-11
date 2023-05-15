@@ -20,12 +20,12 @@ function App() {
           <Route path="/" element={<PublicRoute />}>
             <Route index element={<Login />} />
           </Route>
-          <Route path='/private' element={<PrivateRoute />}>
-            <Route index path='/private/inicio' element={<Inicio />} />
-            <Route path="/private/csv" element={<Csv />} />
-            <Route path="/private/tablon-anuncios" element={<TablonAnuncios />} />
-            <Route path="/private/matriculaciones" element={<Matriculaciones />} />
-            <Route path='/private/emails' element={<Emails />} />
+          <Route element={<PrivateRoute />}>
+            <Route index path='/inicio' element={<Inicio />} />
+            <Route path="/csv" element={<Csv />} />
+            <Route path="/tablon-anuncios" element={<TablonAnuncios />} />
+            <Route path="/matriculaciones" element={<Matriculaciones />} />
+            <Route path='/emails' element={<Emails />} />
           </Route>
         </Routes>
       </BrowserRouter>

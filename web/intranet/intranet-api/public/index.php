@@ -7,7 +7,9 @@ header('Access-Control-Allow-Origin: *');
 
 header('Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE, PUT');
 
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Cache-Control, Pragma, Accept, Accept-Encoding");
+
+
 
 define('LARAVEL_START', microtime(true));
 

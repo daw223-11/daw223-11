@@ -29,7 +29,7 @@ export function Login(props) {
     }
 
     if (user) {
-        return <Navigate to='/private/inicio' replace />
+        return <Navigate to='/inicio' replace />
     }
 
     return (

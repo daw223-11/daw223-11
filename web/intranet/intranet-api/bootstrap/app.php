@@ -11,6 +11,12 @@
 |
 */
 
+/* header('Access-Control-Allow-Origin: *');
+
+header('Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE, PUT');
+
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Cache-Control, Pragma, Accept, Accept-Encoding"); */
+
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );

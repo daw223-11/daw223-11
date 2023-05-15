@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CsvController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -23,6 +24,8 @@ Route::group(['middleware' => ['auth:api', 'role:secretaria,jefatura']], functio
     Route::get('/su', function () {
         return 'hola';
     });
+    Route::post('/subirCsv', [CsvController::class, 'subirCsv']);
+    
 });
 
 /* Route::group(['middleware' => ['role:jefatura']], function () {

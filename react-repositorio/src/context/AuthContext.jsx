@@ -51,20 +51,22 @@ export default function AuthContextProvider({ children }) {
      * Realiza la petición de logout
      */
     const logout = useCallback((user) => {
-
+        let tokenUser = JSON.parse(user).token;
         let requestOptions = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + user.token
+                'Authorization': 'Bearer ' + tokenUser
             },
             body: JSON.stringify({})
         };
 
+        console.log(requestOptions)
 
         fetch("http://iesjulianmarias.ddnsking.com/intranet/api/index.php/logout", requestOptions)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 if (data.success == 1) {
                     window.localStorage.removeItem(INTRANET_USER);
                     setUser(null);

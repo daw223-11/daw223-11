@@ -6,7 +6,7 @@ export function PublicRoute() {
     const { user } = useAuthContext();
 
     if (user) {
-        return <Navigate to='/private/inicio' replace />;
+        return <Navigate to='/inicio' replace />;
     }
 
     return (
