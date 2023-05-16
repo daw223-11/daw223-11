@@ -6,11 +6,23 @@ import { useAuthContext } from '../context/AuthContext';
 export function MainCsv() {
     const { user } = useAuthContext();
     const [file, setFile] = useState(null);
-    const [form, setForm] = useState(null);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            }
+            fileReader.onerror = (error) => {
+                reject(error);
+            }
+        })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,21 +31,21 @@ export function MainCsv() {
             console.log('Archivo no seleccionado');
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-        /* headers: { "Content-Type": "multipart/form-data" } */
+
+
+        const base64 = await convertBase64(file);
+        console.log('base64ej', base64)
 
         try {
-            const response = await fetch('http://iesjulianmarias.ddnsking.com/intranet/api/index.php/subirCsv', {
+            fetch('http://iesjulianmarias.ddnsking.com/intranet/api/index.php/subirCsv', {
                 method: 'POST',
-                body: formData,
-                headers: { "Content-Type": "multipart/form-data", 'Authorization': 'Bearer ' + user.token }
-            });
-
-            const data = await response.json();
-            console.log(data);
+                body: JSON.stringify({ file: base64 }),
+                headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + user.token }
+            })
+                .then(response => response.json())
+                .then(data => console.log('response', data));
         } catch (error) {
-            console.error('error', error);
+            console.error('ERROR EN LA PETICIÓN DEL CSV', error);
         }
     };
 

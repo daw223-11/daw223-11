@@ -14,37 +14,24 @@ class CsvController extends Controller
 
         try {
             $validatedData = $request->validate([
-                'file' => 'required|mimes:csv,txt|max:4096',
+                'file' => 'required',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e){
             return response(['message' => 'Error, petición no válida'], 403);
         }
         // Obtiene el csv
-        $csvFile = $request->file('file');
+        $lines = explode("\n", $request->file);
+        $array = array_map('str_getcsv', $lines);
+        $csvFile = base64_decode($array[0][1]);
+        $realLines = explode("\n", $csvFile);
 
-        /* $csvFile = $request->file('file'); */
-        /* if ($csvFile->getContent() == ""){
-            return response([ 'message' => 'CSV inválido'], '403');
-        } */
-        
         
         // Si la base de datos tiene información se elimina toda la información
         if (!(Csv::count() == 0)){
             Csv::truncate();
         }
-        // Si el csv está vació o se envía otro retorna un error
-        /* if (!$csvFile) {
-            return response([ 'message' => 'CSV inválido'], '403');
-        } */
-
-        $file = new \SplFileObject($csvFile);
-        
-
-        while (!$file->eof()) {
-            // Divide la fila en columnas
-            $data = $file->fgetcsv();
-
-            // Crea una instancia del modelo Csv y asigna los valores de cada columna
+        foreach($realLines as $line){
+            $data = explode(',', $line);
             $csv = Csv::create([
                 "GRUPO" => $data[0],
                 "MATERIA" => $data[1],
@@ -57,6 +44,7 @@ class CsvController extends Controller
                 "DESTINO_EMAIL" => $data[8]
             ]);
         }
+
 
         return response(['success' => 'Archivo cargado satisfactoriamente']);
 

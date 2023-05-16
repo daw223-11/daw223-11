@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
     const [user, setUser] = useState(() =>
-        window.localStorage.getItem(INTRANET_USER)
+        window.localStorage.getItem(INTRANET_USER) ? JSON.parse(window.localStorage.getItem(INTRANET_USER)) : null
     );
 
     /* const changeUser = (newUser) => {
@@ -51,7 +51,7 @@ export default function AuthContextProvider({ children }) {
      * Realiza la petición de logout
      */
     const logout = useCallback((user) => {
-        let tokenUser = JSON.parse(user).token;
+        let tokenUser = user.token;
         let requestOptions = {
             method: 'POST',
             headers: {
@@ -71,7 +71,7 @@ export default function AuthContextProvider({ children }) {
                     window.localStorage.removeItem(INTRANET_USER);
                     setUser(null);
                 } else {
-                    console.log('error');
+                    console.log('error: Logout');
                 }
             })
             .catch(error => console.log('error', error));

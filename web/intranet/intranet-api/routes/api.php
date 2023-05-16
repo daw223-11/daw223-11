@@ -19,13 +19,14 @@ use App\Models\User;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+/* Route::post('/logout', [AuthController::class, 'logout']); */
+
 Route::group(['middleware' => ['auth:api', 'role:secretaria,jefatura']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/su', function () {
         return 'hola';
     });
     Route::post('/subirCsv', [CsvController::class, 'subirCsv']);
-    
 });
 
 /* Route::group(['middleware' => ['role:jefatura']], function () {
