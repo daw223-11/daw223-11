@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CsvController;
+use App\Mail\NotificacionAlumnado;
+use App\Models\Csv;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,6 +29,18 @@ Route::group(['middleware' => ['auth:api', 'role:secretaria,jefatura']], functio
         return 'hola';
     });
     Route::post('/subirCsv', [CsvController::class, 'subirCsv']);
+});
+Route::group(['middleware' => ['auth:api', 'role:jefatura']], function(){
+    Route::get('/su2', function () {
+        // Lista de emails
+        $mails = Csv::pluck('DESTINO_EMAIL')->unique();
+        // Envío de emails
+        foreach ($mails as $mail){
+            Mail::to($mail)->send(new NotificacionAlumnado((Csv::where('DESTINO_EMAIL', '=', $mail)->first())->DESTINO_NOM));
+        }
+        /* Mail::to('3333325256dfsdg.arg@gmail.com')->send(new NotificacionAlumnado("Juan Pablo")); */
+        dd($mail);
+    });
 });
 
 /* Route::group(['middleware' => ['role:jefatura']], function () {
