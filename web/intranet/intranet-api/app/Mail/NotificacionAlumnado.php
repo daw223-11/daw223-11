@@ -2,9 +2,11 @@
 
 namespace App\Mail;
 
+use App\Models\Csv;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -14,12 +16,14 @@ class NotificacionAlumnado extends Mailable
     use Queueable, SerializesModels;
 
     public $nombreProfesor;
+    public $nombreArchivo;
     /**
      * Create a new message instance.
      */
-    public function __construct($nombreProfesor)
+    public function __construct($nombreProfesor, $nombreArchivo)
     {
         $this->nombreProfesor = $nombreProfesor;
+        $this->nombreArchivo = $nombreArchivo;
     }
 
     /**
@@ -41,7 +45,7 @@ class NotificacionAlumnado extends Mailable
             view: 'email',
         );
     }
-
+    // TODO: Crear archivo csv con la lista de alumnos según la asignatura. Aquellos que tienen p son enviados al jefe de departamento
     /**
      * Get the attachments for the message.
      *
@@ -49,8 +53,22 @@ class NotificacionAlumnado extends Mailable
      */
     public function attachments(): array
     {
-        // TODO: Crear archivo csv con la lista de alumnos según la asignatura. Aquellos que tienen p son enviados al jefe de departamento
-        return [];
+        $arrayAttachment = [];
+        $dir = storage_path("app");
+        $archivos = glob($dir . '/*');
+        foreach ($archivos as $archivo) {
+            $dirArchivo = basename($archivo);
+            if (substr($dirArchivo, 0, 7) == 'alumnos'){
+                $arrayDirArchivo = explode('-', $dirArchivo);
+                if ($arrayDirArchivo[1] == (Csv::where('DESTINO_NOM', '=', $this->nombreProfesor)->first())->DESTINO_EMAIL)
+                {
+                    $attachment = Attachment::fromStorage($dirArchivo);
+                    array_push($arrayAttachment, $attachment);
+                }
+
+            }
+        }
+        return $arrayAttachment;
     }
 
 }
