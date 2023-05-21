@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -10,13 +11,14 @@ class AuthController extends Controller
 {
     //
 
-    public function login (Request $request) {
+    public function login(Request $request)
+    {
         $validatedData = $request->validate([
             'username' => 'required|max:255',
             'password' => 'required|max:255'
         ]);
 
-        if (!Auth::attempt($validatedData)){
+        if (!Auth::attempt($validatedData)) {
             return response(['message' => 'Usuario y/o contraseña incorrectos']);
         }
 
@@ -25,7 +27,8 @@ class AuthController extends Controller
     }
 
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $validatedData = $request->validate([
             'username' => 'required|max:255',
             'password' => 'required|max:255',
@@ -36,11 +39,11 @@ class AuthController extends Controller
         ]);
 
 
-        $validatedData['password'] =  Hash::make($request->password);
+        $validatedData['password'] = Hash::make($request->password);
         /* return $validatedData; */
         $user = User::create($validatedData);
         $accessToken = $user->createToken('authToken')->accessToken;
-        return response([ "user" => $user, "token" => $accessToken]);
+        return response(["user" => $user, "token" => $accessToken]);
         // $user = User::create($input);
     }
 
@@ -51,17 +54,16 @@ class AuthController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
         if (!$request->user()) {
-            $data['success'] = 0;
-            $data['message'] = "Log out failed.";
+            $data['message'] = "Log out failed";
             return response()->json($data, '400');
         }
-        
+
         $request->user()->tokens()->delete();
-        $data['success'] = 1;
-        $data['message'] = "Logged out successfully.";
+        $data['success'] = "Logged out successfully";
         return response()->json($data, '200');
     }
 

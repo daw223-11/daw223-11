@@ -1,11 +1,14 @@
 import '../App.css'
 import { useState } from 'react';
-import { Center, Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { SpinnerMod } from './SpinnerMod'
+import { Center, Box, Button, FormControl, FormLabel, Input, useToast } from '@chakra-ui/react';
 import { useAuthContext } from '../context/AuthContext';
 
 export function MainCsv() {
     const { user } = useAuthContext();
     const [file, setFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
+    const toast = useToast();
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -26,7 +29,7 @@ export function MainCsv() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
         if (!file) {
             console.log('Archivo no seleccionado');
         }
@@ -34,7 +37,6 @@ export function MainCsv() {
 
 
         const base64 = await convertBase64(file);
-        console.log('base64ej', base64)
 
         try {
             fetch('http://iesjulianmarias.ddnsking.com/intranet/api/index.php/subirCsv', {
@@ -43,9 +45,39 @@ export function MainCsv() {
                 headers: { "Content-Type": "application/json", 'Authorization': 'Bearer ' + user.token }
             })
                 .then(response => response.json())
-                .then(data => console.log('response', data));
+                .then(data => {
+                    console.log('response', data)
+                    setIsLoading(false);
+                    if (data.success) {
+                        toast({
+                            title: data.success,
+                            position: 'top',
+                            status: 'success',
+                            duration: 9000,
+                            isClosable: true,
+                        })
+                    }
+                    if (data.message) {
+                        toast({
+                            title: data.message,
+                            position: 'top',
+                            status: 'error',
+                            duration: 9000,
+                            isClosable: true,
+                        })
+                    }
+
+                });
         } catch (error) {
             console.error('ERROR EN LA PETICIÓN DEL CSV', error);
+            toast({
+                title: 'ERROR FATAL',
+                position: 'top',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsLoading(false);
         }
     };
 
@@ -57,8 +89,10 @@ export function MainCsv() {
                     <Input type="file" accept=".csv" onChange={(e) => handleFileChange(e)} />
                 </FormControl>
 
-                <Button type="submit" mt={4}>
-                    Subir
+                <Button type="submit" isDisabled={isLoading}>
+                    {isLoading
+                        ? <SpinnerMod />
+                        : 'SUBIR'}
                 </Button>
             </form>
         </Box>

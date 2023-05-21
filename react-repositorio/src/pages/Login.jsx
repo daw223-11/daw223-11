@@ -8,17 +8,16 @@ export function Login(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const handlePasswordChange = (e) => {
-        console.log('password: ', e.target.value)
         setPassword(e.target.value);
     }
 
     const handleUsernameChange = (e) => {
-        console.log('username', e.target.value)
         setUsername(e.target.value)
     }
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
+
         // Se realiza el login
         login({
             username: username,

@@ -1,19 +1,16 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-
+import { useToast } from '@chakra-ui/react';
 const INTRANET_USER = 'INTRANET_USER';
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
+    const toast = useToast();
     const [user, setUser] = useState(() =>
-        window.localStorage.getItem(INTRANET_USER) ? JSON.parse(window.localStorage.getItem(INTRANET_USER)) : null
+        window.localStorage.getItem(INTRANET_USER)
+            ? JSON.parse(window.localStorage.getItem(INTRANET_USER))
+            : null
     );
-
-    /* const changeUser = (newUser) => {
-        setUser(newUser);
-        }
-    */
-
 
 
     /**
@@ -33,11 +30,27 @@ export default function AuthContextProvider({ children }) {
         fetch("http://iesjulianmarias.ddnsking.com/intranet/api/index.php/login", requestOptions)
             .then(response => response.json())
             .then(userData => {
+                if (userData.message) {
+                    toast({
+                        title: userData.message,
+                        position: 'top',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    })
+                }
                 if (userData.token) {
                     // Guarda sessión del usuario en el localStorage
                     window.localStorage.setItem(INTRANET_USER, JSON.stringify(userData));
                     // Cambia el state del usuario en la aplicación
                     setUser(userData);
+                    toast({
+                        title: 'Bienvenido ' + userData.user.name,
+                        position: 'top',
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                    })
                 }
 
             })
@@ -61,17 +74,28 @@ export default function AuthContextProvider({ children }) {
             body: JSON.stringify({})
         };
 
-        console.log(requestOptions)
-
         fetch("http://iesjulianmarias.ddnsking.com/intranet/api/index.php/logout", requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                if (data.success == 1) {
+                if (data.success) {
                     window.localStorage.removeItem(INTRANET_USER);
                     setUser(null);
-                } else {
-                    console.log('error: Logout');
+                    toast({
+                        title: data.success,
+                        position: 'top',
+                        status: 'success',
+                        duration: 9000,
+                        isClosable: true,
+                    })
+                }
+                if (data.message) {
+                    toast({
+                        title: data.message,
+                        position: 'top',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    })
                 }
             })
             .catch(error => console.log('error', error));

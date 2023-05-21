@@ -8,6 +8,12 @@ export function PrivateRoute(props) {
         return <Navigate to='/' replace />;
     }
 
+    if (props.jefatura) {
+        if (!(user.user.id_rol == 2)) {
+            return <Navigate to='/inicio' />;
+        }
+    }
+
     return (
         <div>
             <Outlet />

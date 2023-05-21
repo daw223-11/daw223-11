@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import '../App.css'
+import { useAuthContext } from "../context/AuthContext";
 
 export function NavBar() {
+    const { user } = useAuthContext();
 
     return (
         <nav className="nav">
@@ -18,9 +20,7 @@ export function NavBar() {
                 <li>
                     <Link to="/matriculaciones">MATRICULACIONES</Link>
                 </li>
-                <li>
-                    <Link to="/emails">EMAILS</Link>
-                </li>
+                {user.user.id_rol == 2 ? <li><Link to="/emails">EMAILS</Link></li> : null}
             </ul>
         </nav>
     );

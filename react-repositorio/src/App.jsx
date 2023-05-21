@@ -1,4 +1,4 @@
-import AuthContextProvider from './context/AuthContext';
+import AuthContextProvider, { useAuthContext } from './context/AuthContext';
 import './App.css';
 import { Login } from './pages/Login.jsx';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { Matriculaciones } from './pages/Matriculaciones';
 import { Emails } from "./pages/Emails";
 function App() {
 
-
   return (
 
     <AuthContextProvider>
@@ -20,13 +19,16 @@ function App() {
           <Route path="/" element={<PublicRoute />}>
             <Route index element={<Login />} />
           </Route>
-          <Route element={<PrivateRoute />}>
+          <Route element={<PrivateRoute jefatura={false} />}>
             <Route index path='/inicio' element={<Inicio />} />
             <Route path="/csv" element={<Csv />} />
             <Route path="/tablon-anuncios" element={<TablonAnuncios />} />
             <Route path="/matriculaciones" element={<Matriculaciones />} />
+          </Route>
+          <Route element={<PrivateRoute jefatura={true} />} >
             <Route path='/emails' element={<Emails />} />
           </Route>
+
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
