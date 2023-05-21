@@ -3,6 +3,7 @@
 use App\Exports\ListaAlumnos;
 use App\Http\Controllers\CsvController;
 use App\Mail\NotificacionAlumnado;
+use App\Mail\NotificacionPendiente;
 use App\Models\Csv;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,30 +36,45 @@ Route::group(['middleware' => ['auth:api', 'role:secretaria,jefatura']], functio
 });
 Route::group(['middleware' => ['auth:api', 'role:jefatura']], function(){
     Route::get('/su2', function () {
-        // Lista de materias según un profesor
-        $materias = Csv::where('DESTINO_EMAIL', 'AL2367.ARG@GMAIL.COM')->pluck('MATERIA')->unique();
-    
         // Lista de profesores
-        $profesores = Csv::where('ROL', '=', 'PROF')->pluck('DESTINO_EMAIL')->unique();
-
+        $profesores = Csv::where('PENDIENTE', '!=', 'P')->pluck('DESTINO_EMAIL')->unique();
+        // Lista de jefes de departamento
+        $jefesDep = Csv::where('PENDIENTE', '=', 'P')->pluck('DESTINO_EMAIL')->unique();
         
-        $array = [];
+        // SOLO ESTARÁN LOS JEF DE DEP, NO AQUELLOS QUE TENGAN EL ROL DE PROFESOR
+        foreach ($jefesDep as $jefeDep){
+            // Lista de materias de un profesor
+            $materias = Csv::where('DESTINO_EMAIL', $jefeDep)->where('PENDIENTE', '=', 'P')->pluck('MATERIA')->unique();
+            foreach ($materias as $materia){
+                // Lista de alumnos según cada materia
+                $jefeDep_materia = Csv::select("GRUPO", "MATERIA", "APE_ALU", "NOM_ALU", "EMAIL_ALU")->where('PENDIENTE', '=', 'P')->where('DESTINO_EMAIL', '=', $jefeDep)->where('MATERIA', '=', $materia)->orderBy('GRUPO', 'ASC')->get();
+                $nombreArchivo = 'alumnos'.'-'.Csv::where('DESTINO_EMAIL', '=', $jefeDep)->first()->DESTINO_NOM.'-'.$materia.'-pendientes';
+                // Creación de los pdf y excel
+                Excel::store(new ListaAlumnos($jefeDep_materia), ($nombreArchivo.'.pdf'));
+                Excel::store(new ListaAlumnos($jefeDep_materia), ($nombreArchivo.'.xls'));
+                // TODO: Hacer que se cree un excel según cada materia. Recuerda hacer uno para los que no son p y otro para los p
+            }
+            Mail::to($jefeDep)->send(new NotificacionPendiente((Csv::where('DESTINO_EMAIL', '=', $jefeDep)->first())->DESTINO_NOM, $nombreArchivo));
+        }
+
         // SOLO ESTARÁN LOS PROFESORES, NO AQUELLOS QUE TENGAN EL ROL DE JEF DE DEP
         foreach ($profesores as $profesor){
             // Lista de materias de un profesor
-            $materias = Csv::where('DESTINO_EMAIL', strval($profesor))->pluck('MATERIA')->unique();
+            $materias = Csv::where('DESTINO_EMAIL', $profesor)->where('PENDIENTE', '!=', 'P')->pluck('MATERIA')->unique();
             foreach ($materias as $materia){
                 // Lista de alumnos según cada materia
-                $prof_materia = Csv::select("GRUPO", "MATERIA", "APE_ALU", "NOM_ALU", "EMAIL_ALU")->where('DESTINO_EMAIL', '=', $profesor)->where('MATERIA', '=', $materia)->orderBy('GRUPO', 'ASC')->get();
-                array_push($array, $prof_materia);
-                $nombreArchivo = 'alumnos'.'-'.strval($profesor).'-'.$materia;
+                $prof_materia = Csv::select("GRUPO", "MATERIA", "APE_ALU", "NOM_ALU", "EMAIL_ALU")->where('PENDIENTE', '!=', 'P')->where('DESTINO_EMAIL', '=', $profesor)->where('MATERIA', '=', $materia)->orderBy('GRUPO', 'ASC')->get();
+                $nombreArchivo = 'alumnos'.'-'.(Csv::where('DESTINO_EMAIL', '=', $profesor)->first()->DESTINO_NOM).'-'.$materia;
+                // Creación de los pdf y excel
                 Excel::store(new ListaAlumnos($prof_materia), ($nombreArchivo.'.pdf'));
                 Excel::store(new ListaAlumnos($prof_materia), ($nombreArchivo.'.xls'));
                 // TODO: Hacer que se cree un excel según cada materia. Recuerda hacer uno para los que no son p y otro para los p
-            }    
+            }
             Mail::to($profesor)->send(new NotificacionAlumnado((Csv::where('DESTINO_EMAIL', '=', $profesor)->first())->DESTINO_NOM, $nombreArchivo));
         }
-        return $array;
+        
+        
+        
         return 'trata de funcionar';
 
         // $listaProf = Csv::pluck('DESTINO_EMAIL')->unique()->where('PENDIENTE', '!=', 'p')->where('MATERIA', '=', 'FR2');

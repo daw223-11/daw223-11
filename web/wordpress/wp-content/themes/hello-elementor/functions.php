@@ -210,3 +210,12 @@ if ( ! function_exists( 'hello_elementor_body_open' ) ) {
 		wp_body_open();
 	}
 }
+
+function register_oembed_widget( $widgets_manager ) {
+
+	require_once( __DIR__ . '/widgets/oembed-widget.php' );
+
+	$widgets_manager->register( new \Elementor_oEmbed_Widget() );
+
+}
+add_action( 'elementor/widgets/register', 'register_oembed_widget' );

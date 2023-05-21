@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CsvController extends Controller
 {
-    // TODO: subirCSV() -> Antes de subir el csv eliminará el anterior, luego lo importará a la bbdd 
+    // TODO: subirCSV() -> Comprobar que ese csv está vacío
 
     public function subirCsv(Request $request)
     {
@@ -23,26 +23,34 @@ class CsvController extends Controller
         $lines = explode("\n", $request->file);
         $array = array_map('str_getcsv', $lines);
         $csvFile = base64_decode($array[0][1]);
+        $csvFile = mb_convert_encoding($csvFile, 'UTF-8', 'ISO-8859-15');
+        /* $csvFile = mb_convert_encoding($csvFile, 'UTF-8', 'ISO-8859-1'); */
         $realLines = explode("\n", $csvFile);
-
         
         // Si la base de datos tiene información se elimina toda la información
         if (!(Csv::count() == 0)){
             Csv::truncate();
         }
+
         foreach($realLines as $line){
-            $data = explode(',', $line);
-            $csv = Csv::create([
-                "GRUPO" => $data[0],
-                "MATERIA" => $data[1],
-                "APE_ALU" => $data[2],
-                "NOM_ALU" => $data[3],
-                "EMAIL_ALU" => $data[4],
-                "PENDIENTE" => $data[5],
-                "ROL" => $data[6],
-                "DESTINO_NOM" => $data[7],
-                "DESTINO_EMAIL" => $data[8]
-            ]);
+            $lineM = strtoupper($line);
+            $lineMS = str_replace('"', "", $lineM);
+            $data = explode(',', $lineMS);
+            try {
+                $csv = Csv::create([
+                    "GRUPO" => $data[0],
+                    "MATERIA" => $data[1],
+                    "APE_ALU" => $data[2],
+                    "NOM_ALU" => $data[3],
+                    "EMAIL_ALU" => $data[4],
+                    "PENDIENTE" => $data[5],
+                    "ROL" => $data[6],
+                    "DESTINO_NOM" => $data[7],
+                    "DESTINO_EMAIL" => $data[8]
+                ]);
+            } catch (\Exception $e){
+                return response(['message' => 'Error en la carga del csv'], 400);
+            }
         }
 
 

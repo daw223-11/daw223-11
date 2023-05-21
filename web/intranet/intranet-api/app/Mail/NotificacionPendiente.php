@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NotificacionAlumnado extends Mailable
+class NotificacionPendiente extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -61,10 +61,12 @@ class NotificacionAlumnado extends Mailable
             if (substr($dirArchivo, 0, 7) == 'alumnos'){
                 $arrayDirArchivo = explode('-', $dirArchivo);
                 // Comprobar si es pendiente
-                if ($arrayDirArchivo[1] == $this->nombreProfesor && !isset($arrayDirArchivo[3]))
-                {
-                    $attachment = Attachment::fromStorage($dirArchivo);
-                    array_push($arrayAttachment, $attachment);
+                if (isset($arrayDirArchivo[3])){
+                    if ($arrayDirArchivo[1] == $this->nombreProfesor)
+                    {
+                        $attachment = Attachment::fromStorage($dirArchivo);
+                        array_push($arrayAttachment, $attachment);
+                    }
                 }
 
             }
