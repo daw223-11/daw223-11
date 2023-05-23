@@ -20,6 +20,7 @@ class TablonAnunciosController extends Controller
         try {
             return response([
                 'success' => 'Tablón cargado correctamente',
+                'nombre' => $tablonAnuncios->nombre,
                 'data' => $tablonAnuncios->data
             ]);
         } catch (\Exception $e) {

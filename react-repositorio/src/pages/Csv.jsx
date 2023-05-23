@@ -6,12 +6,12 @@ import { Center } from "@chakra-ui/react"
 export function Csv() {
 
     return (
-        <div className="page">
+        <div className='page'>
             <Header />
             <Center>
                 <NavBar />
             </Center>
-            <Center>
+            <Center className='main'>
                 <MainCsv />
             </Center>
         </div>

@@ -3,8 +3,8 @@ import '../App.css'
 export function MainInicio() {
 
     return (
-        <main className="mainInicio">
+        <div>
             <h1>BIENVENIDO A LA INTRANET DEL IES JULIÁN MARÍAS</h1>
-        </main>
+        </div>
     )
 }

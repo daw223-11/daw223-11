@@ -9,6 +9,7 @@ import { TablonAnuncios } from './pages/TablonAnuncios';
 import { Csv } from './pages/Csv';
 import { Matriculaciones } from './pages/Matriculaciones';
 import { Emails } from "./pages/Emails";
+import { Registro } from './pages/Registro';
 function App() {
 
   return (
@@ -27,6 +28,7 @@ function App() {
           </Route>
           <Route element={<PrivateRoute jefatura={true} />} >
             <Route path='/emails' element={<Emails />} />
+            <Route path='/registrarUsuarios' element={<Registro />} />
           </Route>
 
         </Routes>

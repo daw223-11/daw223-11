@@ -6,7 +6,7 @@ import { MainTablonAnuncios } from '../components/MainTablonAnuncios'
 export function TablonAnuncios() {
 
     return (
-        <div className="page">
+        <div className="page main">
             <Header />
             <Center>
                 <NavBar />

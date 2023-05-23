@@ -7,7 +7,7 @@ import { Center } from "@chakra-ui/react";
 export function Matriculaciones() {
 
     return (
-        <div className="page">
+        <div className="page main">
             <Header />
             <Center>
                 <NavBar />

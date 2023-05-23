@@ -1,6 +1,6 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import Editor from 'ckeditor5-custom-build';
-import { Button, Center, HStack, useToast } from '@chakra-ui/react';
+import { Button, Center, HStack, useToast, Tabs, Tab, TabList, TabPanels, TabPanel } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { SpinnerMod } from './SpinnerMod';
 import { useAuthContext } from '../context/AuthContext';
@@ -13,13 +13,17 @@ export function CKEditorMod() {
     const [isLoading, setIsLoading] = useState(null);
     const toast = useToast();
     useEffect(() => {
-        fetchData();
+        fetchData(part);
+
     }, []);
 
     // Petición que se carga al crear el componente
-    const fetchData = async () => {
+    const fetchData = async (n) => {
         try {
-            const response = await fetch('http://iesjulianmarias.ddnsking.com/intranet/api/index.php/obtenerTablonAnuncios/' + part, {
+            setPart(n)
+            const num = n != null ? n : 1
+            const url = 'http://iesjulianmarias.ddnsking.com/intranet/api/index.php/obtenerTablonAnuncios/' + num
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: { 'Authorization': 'Bearer ' + user.token }
             });
@@ -53,9 +57,15 @@ export function CKEditorMod() {
         setData(editor.getData());
     }
 
+    const handleTabClick = (e, n) => {
+        e.preventDefault();
+        fetchData(n);
+    }
+
     // Cuando clica en guardar, envía petición POST a la api
     const handleGuardarClick = (e) => {
         setIsLoading(true);
+        console.log('esto es part ahora mismo guardar', part)
         const base64Data = btoa(data);
         fetch('http://iesjulianmarias.ddnsking.com/intranet/api/index.php/actualizarTablonAnuncios/' + part, {
             method: 'POST',
@@ -95,42 +105,43 @@ export function CKEditorMod() {
 
     return (
         <>
-            <Center>
-                <HStack marginBottom={'20px'}>
-                    <Button onClick={(e) => {
-                        setPart(1);
-                        fetchData()
-                    }}
-                        isDisabled={isLoading}>
-                        {isLoading
-                            ? <SpinnerMod />
-                            : 'ESO/BACHILLERATO'}
-                    </Button>
-                    <Button onClick={(e) => {
-                        setPart(2);
-                        fetchData()
-                    }}
-                        isDisabled={isLoading}>
-                        {isLoading
-                            ? <SpinnerMod />
-                            : 'NOVEDADES'}
-                    </Button>
-                    <Button onClick={(e) => {
-                        setPart(3);
-                        fetchData()
-                    }}
-                        isDisabled={isLoading}>
-                        {isLoading
-                            ? <SpinnerMod />
-                            : 'FP'}
-                    </Button>
-                </HStack>
-            </Center>
-            <CKEditor
-                editor={Editor}
-                data={data}
-                onChange={(event, editor) => handleDataChange(event, editor)}
-            />
+            <Tabs isFitted variant='enclosed'>
+                <TabList mb='1em'>
+                    <Tab onClick={(e) => handleTabClick(e, 1)}>
+                        ESO/BACHILLERATO
+                    </Tab>
+                    <Tab onClick={(e) => handleTabClick(e, 2)}>
+                        NOVEDADES
+                    </Tab>
+                    <Tab onClick={(e) => handleTabClick(e, 3)}>
+                        FP
+                    </Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel>
+                        <CKEditor
+                            editor={Editor}
+                            data={data}
+                            onChange={(event, editor) => handleDataChange(event, editor)}
+                        />
+                    </TabPanel>
+                    <TabPanel >
+                        <CKEditor
+                            editor={Editor}
+                            data={data}
+                            onChange={(event, editor) => handleDataChange(event, editor)}
+                        />
+                    </TabPanel>
+                    <TabPanel >
+                        <CKEditor
+                            editor={Editor}
+                            data={data}
+                            onChange={(event, editor) => handleDataChange(event, editor)}
+                        />
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+
             <Center marginTop={'20px'}>
                 <Button onClick={(e) => handleGuardarClick(e)} isDisabled={isLoading}>
                     {isLoading

@@ -1,9 +1,9 @@
 import { Header } from "../components/Header"
 import { NavBar } from "../components/NavBar"
 import { Center } from "@chakra-ui/react"
-import { MainEmails } from "../components/MainEmails"
+import { MainRegistro } from "../components/MainRegistro"
 
-export function Emails() {
+export function Registro() {
     return (
         <div className='page'>
             <Header />
@@ -11,7 +11,7 @@ export function Emails() {
                 <NavBar />
             </Center>
             <Center className='main'>
-                <MainEmails />
+                <MainRegistro />
             </Center>
         </div>
     )

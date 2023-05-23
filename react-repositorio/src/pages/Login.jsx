@@ -27,28 +27,34 @@ export function Login(props) {
 
     }
 
+
     if (user) {
         return <Navigate to='/inicio' replace />
     }
 
     return (
         <div className="login-body">
-            <Center h={'100vh'} bgColor={'#121212'}>
-                <Container bgColor={'#E9E9E9'} centerContent='true' className="login-container" borderRadius={'8px'} paddingTop={'20px'} paddingBottom={'20px'}>
+            <Center h={'100vh'} bgColor={'#DAE9FF'}>
+                <Container bgColor={'#001F4D'} centerContent='true' className="login-container" borderRadius={'8px'} paddingBottom={'50px'} paddingTop={'50px'}>
                     <form action="post" onSubmit={(e) => handleSubmitForm(e)}>
-                        <Stack w={'100%'} spacing={3}>
-                            <FormControl action="post" className="login-form" isRequired>
-                                <FormLabel>Username</FormLabel>
-                                <Input name="inputUsername" bgColor={'#FFFFFF'} type="text" placeholder="Username" onChange={(e) => handleUsernameChange(e)} />
-                            </FormControl>
-                            <FormControl action="post" className="login-form" isRequired>
-                                <FormLabel>Password</FormLabel>
-                                <PasswordInput handlePasswordChange={handlePasswordChange} />
-                            </FormControl>
-                            <Button colorScheme='teal' variant='outline' type="submit">
-                                Enviar
-                            </Button>
-                        </Stack>
+                        <Center paddingBottom={'20px'}>
+                            <img src="http://iesjulianmarias.ddnsking.com/wp-content/uploads/logo-1024x695.png" width={'45%'} />
+                        </Center>
+                        <Center>
+                            <Stack w={'70%'} spacing={3}>
+                                <FormControl action="post" className="login-form" isRequired>
+                                    <FormLabel color={'white'}>Username</FormLabel>
+                                    <Input name="inputUsername" bgColor={'#FFFFFF'} type="text" placeholder="Username" onChange={(e) => handleUsernameChange(e)} />
+                                </FormControl>
+                                <FormControl action="post" className="login-form" isRequired>
+                                    <FormLabel color={'white'}>Password</FormLabel>
+                                    <PasswordInput handlePasswordChange={handlePasswordChange} />
+                                </FormControl>
+                                <Button type="submit">
+                                    Enviar
+                                </Button>
+                            </Stack>
+                        </Center>
                     </form>
                 </Container>
             </Center>

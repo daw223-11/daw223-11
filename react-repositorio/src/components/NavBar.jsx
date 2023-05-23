@@ -12,7 +12,7 @@ export function NavBar() {
                     <Link to="/inicio">INICIO</Link>
                 </li>
                 <li>
-                    <Link to="/csv">CSV</Link>
+                    <Link to="/csv">SUBIR CSV</Link>
                 </li>
                 <li>
                     <Link to="/tablon-anuncios">TABLÓN DE ANUNCIOS</Link>
@@ -20,7 +20,8 @@ export function NavBar() {
                 <li>
                     <Link to="/matriculaciones">MATRICULACIONES</Link>
                 </li>
-                {user.user.id_rol == 2 ? <li><Link to="/emails">EMAILS</Link></li> : null}
+                {user.user.id_rol == 2 ? <li><Link to="/emails">ENVIAR EMAILS</Link></li> : null}
+                {user.user.id_rol == 2 ? <li><Link to="/registrarUsuarios">REGISTRAR USUARIOS</Link></li> : null}
             </ul>
         </nav>
     );

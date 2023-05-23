@@ -29,13 +29,20 @@ export function MainCsv() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
         if (!file) {
-            console.log('Archivo no seleccionado');
+            toast({
+                title: 'Archivo no selccionado',
+                position: 'top',
+                status: 'info',
+                duration: 9000,
+                isClosable: true,
+            });
+            return
         }
 
 
 
+        setIsLoading(true);
         const base64 = await convertBase64(file);
 
         try {
@@ -69,7 +76,6 @@ export function MainCsv() {
 
                 });
         } catch (error) {
-            console.error('ERROR EN LA PETICIÓN DEL CSV', error);
             toast({
                 title: 'ERROR FATAL',
                 position: 'top',
@@ -84,12 +90,11 @@ export function MainCsv() {
     return (
         <Box w="full" maxW="sm" borderWidth="1px" borderRadius="lg" p={4}>
             <form method='post' onSubmit={(e) => handleSubmit(e)}>
-                <FormControl>
+                <FormControl marginBottom={'20px'}>
                     <FormLabel>SUBIR CSV</FormLabel>
-                    <Input type="file" accept=".csv" onChange={(e) => handleFileChange(e)} />
+                    <Input type="file" accept=".csv" onChange={(e) => handleFileChange(e)} border={'1px solid black'} padding={'30px'} />
                 </FormControl>
-
-                <Button type="submit" isDisabled={isLoading}>
+                <Button type="submit" isDisabled={isLoading} p={4}>
                     {isLoading
                         ? <SpinnerMod />
                         : 'SUBIR'}
