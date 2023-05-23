@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CsvController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\TablonAnunciosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -28,11 +29,13 @@ Route::group(['middleware' => ['auth:api', 'role:secretaria,jefatura']], functio
         return 'hola';
     });
     Route::post('/subirCsv', [CsvController::class, 'subirCsv']);
+    Route::get('/obtenerTablonAnuncios/{tablonAnuncios}', [TablonAnunciosController::class, 'obtenerTablonAnuncios']);
+    Route::post('/actualizarTablonAnuncios/{tablonAnuncios}', [TablonAnunciosController::class, 'actualizarTablonAnuncios']);
 });
 Route::group(['middleware' => ['auth:api', 'role:jefatura']], function () {
-    Route::post('/ej', function () {
+    /* Route::post('/ej', function () {
         return response(['message' => 'hola']);
-    });
+    }); */
     Route::post('/enviarEmails', [EmailController::class, 'enviarEmails']);
 
 });

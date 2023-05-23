@@ -29,22 +29,22 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
-            'username' => 'required|max:255',
-            'password' => 'required|max:255',
-            'email' => 'required|max:255',
-            'name' => 'required|max:255',
-            'lastname1' => 'required|max:255',
-            'id_rol' => 'required|max:255'
-        ]);
-
-
-        $validatedData['password'] = Hash::make($request->password);
-        /* return $validatedData; */
-        $user = User::create($validatedData);
-        $accessToken = $user->createToken('authToken')->accessToken;
-        return response(["user" => $user, "token" => $accessToken]);
-        // $user = User::create($input);
+        try {
+            $validatedData = $request->validate([
+                'username' => 'required|max:255',
+                'password' => 'required|max:255',
+                'email' => 'required|max:255',
+                'name' => 'required|max:255',
+                'lastname1' => 'required|max:255',
+                'id_rol' => 'required|max:255'
+            ]);
+            $validatedData['password'] = Hash::make($request->password);
+            $user = User::create($validatedData);
+            $accessToken = $user->createToken('authToken')->accessToken;
+            return response(["user" => $user, "token" => $accessToken]);
+        } catch (\Exception $e) {
+            return response(['message' => 'Error en la creación del usuario']);
+        }
     }
 
 
