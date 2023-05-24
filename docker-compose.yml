@@ -13,8 +13,6 @@ services:
     networks:
       networkwp:
         ipv4_address: 172.24.0.10
-    volumes:
-      - /home/ubuntu/wp-julianmarias/web:/var/www/html:rwx
   db:
     image: mysql:8.0.32
     restart: always
@@ -30,7 +28,7 @@ services:
       networkwp:
         ipv4_address: 172.24.0.2
     volumes:
-      - /home/ubuntu/wp-julianmarias/bbdd:/var/lib/mysql:rwx
+      - ./bbdd:/var/lib/mysql:rwx
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
     restart: always
