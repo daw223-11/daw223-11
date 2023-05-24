@@ -7,10 +7,13 @@ RUN apt-get update \
     && apt-get install -y libpng-dev \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install zip
-
+# RUN echo "memory_limit = 1G" > /usr/local/etc/php/conf.d/memory_limit.ini
 # Nodejs y NPM
-RUN RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
-RUN apt install -y nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_lts.x -o nodesource_setup.sh
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get update
+RUN apt-get install -y nodejs
+# RUN apt install -y nodejs
 
 # CONEXIÓN BBDD
 RUN docker-php-ext-install gd && docker-php-ext-enable gd
@@ -23,24 +26,27 @@ RUN apt-get update \
 # Por si hace falta hacer git clone
 RUN apt-get install -y git
 RUN git clone https://github.com/daw223-11/wp-julianmarias.git
-
+RUN mv wp-julianmarias/* ./
+RUN rm -fr wp-julianmarias
 # Mover intranet y wordpress a /var/www/html
-RUN mv web/* ./
+RUN mv ./web/* ./
 
 WORKDIR spa-intranet
 
 # Build de la SPA
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN npm install
 RUN npm run build
 
 RUN rm -fr ../intranet/front/*
 
-RUN mv build/* ../intranet/front/
+RUN mv ./build/* ../intranet/front/
 
 # Elimina los archivos restantes
 WORKDIR ../
 RUN rm -fr bbdd && rm -fr image-ia && rm -fr docker-compose.yml && rm -fr DockerFile && rm -fr spa-intranet && rm -fr sites-available && rm -fr web
 
-WORKDIR intranet/intranet-api
+WORKDIR ./intranet/intranet-api
 RUN ./composer.phar install
 RUN php artisan passport:keys
 
@@ -58,7 +64,7 @@ RUN docker-php-ext-enable imagick
 # Instalación de exif
 RUN docker-php-ext-install exif && docker-php-ext-enable exif
 
-# Instalación 
+# Instalación
 RUN apt-get install -y libicu-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
