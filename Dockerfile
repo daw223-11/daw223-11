@@ -26,8 +26,8 @@ RUN apt-get update \
 # Por si hace falta hacer git clone
 RUN apt-get install -y git
 RUN git clone https://github.com/daw223-11/daw223-11.git
-RUN mv wp-julianmarias/* ./
-RUN rm -fr wp-julianmarias
+RUN mv daw223-11/* ./
+RUN rm -fr daw223-11
 # Mover intranet y wordpress a /var/www/html
 RUN mv ./web/* ./
 
