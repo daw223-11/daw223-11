@@ -41,9 +41,9 @@ class AuthController extends Controller
             $validatedData['password'] = Hash::make($request->password);
             $user = User::create($validatedData);
             $accessToken = $user->createToken('authToken')->accessToken;
-            return response(["user" => $user, "token" => $accessToken]);
+            return response(['success' => 'Usuario creado correctamente'], 200);
         } catch (\Exception $e) {
-            return response(['message' => 'Error en la creación del usuario']);
+            return response(['message' => 'Error en la creación del usuario'], 400);
         }
     }
 
