@@ -71,6 +71,7 @@ RUN apt-get install -y libicu-dev \
 
 
 RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 777 ./intranet/intranet-api/storage
 # IMPORTANTE
 RUN a2enmod rewrite
 EXPOSE 80
